@@ -1,9 +1,20 @@
+/*
+Requirements
+  esp32 by Espressif
+  Adafruit GFX Library
+  Adafruit BusIO
+  GxEPD
+  DHT sensor library
+  Adafruit Unified Sensor
+*/
+
 #include <GxEPD.h>
 #include <GxGDEW042T2/GxGDEW042T2.h>  // 4.2" b/w display
 #include <Fonts/FreeMonoBold18pt7b.h>
 #include <GxIO/GxIO_SPI/GxIO_SPI.h>
 #include <GxIO/GxIO.h>
 #include "DHT.h"  // DHT sensor library
+#include "timeUtils.h"
 
 // Pin configuration for ESP32 and other boards
 #if defined(ESP32)
@@ -82,6 +93,9 @@ void displaySensorDataOnScreen(float temperature, float humidity) {
   // Calculate starting position for the text so it's centered
   int x = (display.width() - tbw) / 2;
   int y = (display.height() - totalHeight) / 2;
+
+  int xOffset = tbx / 2;
+  x = x - xOffset;
 
   display.setCursor(x, y);
   display.println(tempText);
